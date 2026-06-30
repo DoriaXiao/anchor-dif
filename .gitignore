@@ -1,0 +1,17 @@
+# Quarto / LaTeX build artifacts
+/paper/anchor_dif_files/
+/paper/*.aux
+/paper/*.log
+/paper/*.bbl
+/paper/*.bcf
+/paper/*.blg
+/paper/*.out
+/paper/*.run.xml
+/paper/*.fls
+/paper/*.fdb_latexmk
+/paper/*.tex
+/paper/.quarto/
+/paper/render.log
+.Rhistory
+.RData
+.DS_Store
