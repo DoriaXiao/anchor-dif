@@ -299,7 +299,7 @@ return {
               orcidfile = "_extensions/apaquarto/ORCID-iD_icon-vector.svg"
             end
             img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile)
-            img.attr = pandoc.Attr('orchid', { 'img-fluid' }, { width = '4.23mm' })
+            img.attr = pandoc.Attr('orcid', { 'img-fluid' }, { width = '4.23mm' })
             pp = pandoc.Para(pandoc.Str(""))
             pp.content:extend(a.apaauthordisplay)
             pp.content:extend({ pandoc.Space(), img })
@@ -589,7 +589,7 @@ return {
         local keywords_paragraph = pandoc.Para({ pandoc.Emph(keywordsword), pandoc.Str(":") })
 
         if pandoc.utils.type(meta.keywords) == "Inlines" then
-          keywords_paragraph = keywords_paragraph.content:extend(meta.keywords)
+          keywords_paragraph.content:extend(meta.keywords)
         else
           for i, k in ipairs(meta.keywords) do
             if i == 1 then
@@ -658,7 +658,7 @@ return {
       end
 
       if FORMAT:match 'typst' and PANDOC_WRITER_OPTIONS["table_of_contents"] then
-        body:extend({ pandoc.RawBlock('typst', '\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n') })
+        body:extend({ pandoc.RawBlock('typst', '\n\n#show outline.entry: it => {show link: set text(fill: black)\nlink(it.element.location(),it.indented(none, it.inner(), ))}\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n') })
         body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
       end
 
@@ -677,7 +677,7 @@ return {
       if meta.apatitledisplay and not meta["suppress-title-introduction"] then
         local firstpageheader = documenttitle:clone()
         firstpageheader.identifier = "firstheader"
-        firstpageheader.classes = { "title", "unnumbered", "unlisted" }
+        firstpageheader.classes = { "title", "unnumbered" }
         body:extend({ firstpageheader })
       end
 

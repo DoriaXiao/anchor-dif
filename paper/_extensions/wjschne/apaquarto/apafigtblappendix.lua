@@ -38,7 +38,7 @@ local function gettablefig(m)
 
   -- Create arrays with figure and table information
   while quarto._quarto.ast.custom_node_data[tostring(i)] do
-    float = quarto._quarto.ast.custom_node_data[tostring(i)]
+    local float = quarto._quarto.ast.custom_node_data[tostring(i)]
     --Is the float a table?
     if float.identifier and string.find(float.identifier, "^tbl%-") then
       -- is the table already in the array?
@@ -55,8 +55,10 @@ local function gettablefig(m)
       if fig[float.identifier] then
         -- Figure is already in the array. Do not add.
       else
-        --Add figure to array
-        fig[float.identifier] = float.attributes.prefix .. float.attributes.fignum
+        --Add figure to array (only if prefix and fignum exist)
+        if float.attributes.prefix and float.attributes.fignum then
+          fig[float.identifier] = float.attributes.prefix .. float.attributes.fignum
+        end
       end
     end
     i = i + 1
@@ -100,7 +102,7 @@ local function figtblconvert(ct)
 
 
   --Is the citation a reference to a table or figure?
-  if #ct.citations == 1 and string.find(ct.citations[1].id, "^fig%-") or string.find(ct.citations[1].id, "^tbl%-") or string.find(ct.citations[1].id, "^sec%-") then
+  if #ct.citations == 1 and (string.find(ct.citations[1].id, "^fig%-") or string.find(ct.citations[1].id, "^tbl%-") or string.find(ct.citations[1].id, "^sec%-")) then
     if floatreftext == nil then
       quarto.log.warning("Cannot find @" .. ct.citations[1].id)
       return floatreftext

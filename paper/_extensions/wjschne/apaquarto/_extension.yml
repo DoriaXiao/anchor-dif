@@ -1,6 +1,6 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
-version: 5.0.13
+version: 5.0.18
 quarto-required: ">=1.4.549"
 contributes:
   formats:
@@ -38,6 +38,7 @@ contributes:
       suppress-corresponding-city: false
       suppress-corresponding-region: false
       suppress-corresponding-postal-code: false
+      suppress-corresponding-country: false
       suppress-corresponding-email: false
       suppress-abstract: false
       suppress-impact-statement: false
@@ -151,6 +152,7 @@ contributes:
       fig-cap-location: top
       html-math-method: katex
       mainfont: Times, Times New Roman, serif
+      monofont: Consolas, Lucida Console, Courier New, monospace
       grid: 
         body-width: "7in"
       css: apa.css
@@ -173,7 +175,6 @@ contributes:
       template-partials:
         - doc-class.tex
         - title.tex
-        - before-body.tex
         - header.tex
       classoption: "colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue"
     docx: 

@@ -10,7 +10,7 @@ end
 function Header(hx)
   if hx.level > 3 then
     -- Add a period unless a punctuation mark is already present
-    if not (ends_with(hx.content[#hx.content], ".") or ends_with(hx.content[#hx.content], "?") or ends_with(hx.content[#hx.content], "?")) then
+    if not (ends_with(hx.content[#hx.content], ".") or ends_with(hx.content[#hx.content], "?") or ends_with(hx.content[#hx.content], "!")) then
       hx.content[#hx.content + 1] = pandoc.Str(".")
     end
     if FORMAT == "docx" then
