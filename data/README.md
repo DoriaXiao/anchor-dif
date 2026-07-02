@@ -29,6 +29,11 @@ and is not redistributed here.
 `../data-prep/20_build_constat.py` reconstructs every CSV from the ConStat `compressed_output.zip`.
 Item identifiers and the correctness metric per benchmark are documented in that script.
 
+Source pin (retrieved 2026-06-29):
+
+- `https://files.sri.inf.ethz.ch/constat/compressed_output.zip` (model outputs; md5 `10f815b7db3ac159f490c71cb931c154`)
+- The benchmark item text lives in `data_contamination.zip` from the same release (md5 `1aa46b2b56402d4a8aacbc930f3882ee`); it is password protected by the ConStat authors to limit recontamination and is neither needed here nor redistributed. See the ConStat repository (`eth-sri/ConStat`) for access.
+
 ## License
 
 Derived data redistributed for reproducibility with attribution to the ConStat authors. Refer

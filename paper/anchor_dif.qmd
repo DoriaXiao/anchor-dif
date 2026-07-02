@@ -166,7 +166,8 @@ sim <- lapply(c(0, 0.02, 0.05, 0.08, 0.12, 0.16, 0.20, 0.30), function(delta) {
   }
   data.frame(delta = delta, spearman = mean(sp), rankrise = mean(rs))
 }) %>% bind_rows()
-delta_move <- sim$delta[which(sim$spearman < 0.97)[1]]  # threshold for a meaningful reorder
+reorder_thr <- 0.97  # rank correlation below this counts as a meaningful reorder
+delta_move <- sim$delta[which(sim$spearman < reorder_thr)[1]]
 
 # ---- robustness: per-benchmark, alternative ability model, two-reference corroboration ----
 perbench_nr <- sapply(benches, function(b) cor(rank(-rasch(N[[b]][real, ])), rank(-rasch(R[[b]][real, ]))))
@@ -272,7 +273,7 @@ ggplot(db, aes(scoring, rank, group = model)) +
 
 ## The null is informative, and a second reference confirms it
 
-The audit's detection floor is well below the contamination present in public models, so the robust-leaderboard result reflects an absence of contamination rather than an absence of resolution (@fig-sensitivity). The minimum detectable effects range from `r fmt3(min(mde))` to `r fmt3(max(mde))` accuracy points across the four benchmarks. The observed differential contamination among public models has a median of `r fmt3(obs_med)` and a 95th percentile of `r fmt3(obs_95)`, at or below this floor; the maximum is `r fmt3(obs_max)`, for `r obs_max_disp` on `r toupper(obs_max_bench)`. The simulation locates these values on the distortion curve: differential contamination of about `r fmt2(delta_move)` accuracy points is required before the leaderboard reorders meaningfully (rank correlation falling below 0.97), several times the observed 95th percentile, and the observed range sits where the rank correlation is near unity.
+The audit's detection floor is well below the contamination present in public models, so the robust-leaderboard result reflects an absence of contamination rather than an absence of resolution (@fig-sensitivity). The minimum detectable effects range from `r fmt3(min(mde))` to `r fmt3(max(mde))` accuracy points across the four benchmarks. The observed differential contamination among public models has a median of `r fmt3(obs_med)` and a 95th percentile of `r fmt3(obs_95)`, at or below this floor; the maximum is `r fmt3(obs_max)`, for `r obs_max_disp` on `r toupper(obs_max_bench)`. The simulation locates these values on the distortion curve: differential contamination of about `r fmt2(delta_move)` accuracy points is required before the leaderboard reorders meaningfully (rank correlation falling below `r fmt2(reorder_thr)`), several times the observed 95th percentile, and the observed range sits where the rank correlation is near unity.
 
 ```{r fig-sensitivity}
 #| fig-cap: "Simulated leaderboard distortion versus injected differential contamination. The shaded band is the observed range of contamination among public models, where distortion is negligible."
@@ -280,7 +281,7 @@ The audit's detection floor is well below the contamination present in public mo
 ggplot(sim, aes(delta, spearman)) +
   annotate("rect", xmin = 0, xmax = as.numeric(obs_95), ymin = -Inf, ymax = Inf, alpha = 0.15, fill = "#55A868") +
   geom_line(color = "#4C72B0") + geom_point(color = "#4C72B0") +
-  geom_hline(yintercept = 0.97, linetype = "dashed", linewidth = 0.3) +
+  geom_hline(yintercept = reorder_thr, linetype = "dashed", linewidth = 0.3) +
   labs(x = "injected differential contamination (accuracy points)",
        y = "rank correlation (clean vs contaminated)") +
   theme_classic(base_size = 11)
@@ -288,7 +289,7 @@ ggplot(sim, aes(delta, spearman)) +
 
 The conclusion does not depend on paraphrasing as the only clean reference. Using the synthetic items, which are newly generated equivalents rather than paraphrases, the rank correlation between the standard and synthetic-reference leaderboards is `r fmt3(sp_ns)`; the modest reduction relative to `r fmt3(sp_nr)` is consistent with the additional estimation noise of a different item set. The synthetic reference also closes the paraphrase blind spot: the paraphrase-leakage condition, missed by the original-minus-paraphrase axis (`r sgn3(reph_A)`), is caught by the paraphrase-minus-synthetic axis (`r sgn3(reph_C)`), while the negative control remains near zero on both.
 
-The conclusion is stable across specifications. The rank correlation between standard and paraphrase-controlled scoring holds within each benchmark analyzed separately, ranging from `r fmt3(pb_lo)` to `r fmt3(pb_hi)` across the four, so it is not an artifact of pooling. It does not depend on the ability model either: ranking models by raw pooled accuracy rather than Rasch ability leaves the standard-versus-paraphrase correlation at `r fmt3(sp_rawacc)`. Finally, requiring a case to exceed the detection floor on both the paraphrase and the synthetic reference, which guards against the multiplicity of testing `r n_tests` model-by-benchmark combinations, leaves `r n_corrob` corroborated cases (`r corrob_txt`). Differential contamination is thus rare and concentrated in a few large models on GSM8K and MMLU, consistent with the near-invariance of the leaderboard as a whole. Because the raw-accuracy and per-benchmark checks make no unidimensional-trait assumption, the leaderboard conclusion does not hinge on the validity of applying IRT to models, which is itself contested.
+The conclusion is stable across specifications. The rank correlation between standard and paraphrase-controlled scoring holds within each benchmark analyzed separately, ranging from `r fmt3(pb_lo)` to `r fmt3(pb_hi)` across the four, so it is not an artifact of pooling. It does not depend on the ability model either: ranking models by raw pooled accuracy rather than Rasch ability leaves the standard-versus-paraphrase correlation at `r fmt3(sp_rawacc)`. Finally, requiring a case to exceed the detection floor on both the paraphrase and the synthetic reference, which guards against the multiplicity of testing `r n_tests` model-by-benchmark combinations, leaves `r n_corrob` corroborated cases (`r corrob_txt`). These are model-level judgments, distinct from the item-level flagged anchors above: an item is flagged when it functions differently for all models after paraphrasing, whereas a corroborated case is a single model outperforming its peers on original wording. Differential contamination is thus rare and concentrated in a few large models on GSM8K and MMLU, consistent with the near-invariance of the leaderboard as a whole. Because the raw-accuracy and per-benchmark checks make no unidimensional-trait assumption, the leaderboard conclusion does not hinge on the validity of applying IRT to models, which is itself contested.
 
 # Discussion
 
