@@ -1,5 +1,5 @@
 ---
-title: "Contamination Inflates Scores but Rarely Reorders Leaderboards: A Ground-Truth-Calibrated Measurement-Invariance Audit of Language Model Benchmarks"
+title: "Contamination Inflates Scores but Rarely Reorders Large Language Model Leaderboards"
 shorttitle: "Contamination Rarely Reorders Leaderboards"
 author:
   - name: Xingyao (Doria) Xiao
@@ -220,11 +220,11 @@ To motivate the within-item design, we also assembled two observational datasets
 
 The model-level contamination signal for a model on a benchmark is the mean over shared items of the original-minus-paraphrase correctness difference. Because paraphrasing can change item difficulty at the benchmark level, this raw gap is referenced to a clean baseline: we subtract the same gap computed for a clean Llama-2 base model. At the item level, the contaminated-anchor statistic is the mean original-minus-paraphrase gap for that item, centered within its benchmark.
 
-We estimate model ability with a penalized joint maximum likelihood Rasch model, fit separately to the original and to the paraphrased responses, and compare the resulting rankings. A standard leaderboard is the ranking from original items; a paraphrase-controlled leaderboard is the ranking from paraphrased items; uniform contamination shifts both equally and does not change their relative order, so any rank discrepancy is attributable to differential contamination. As an independent check that does not depend on paraphrasing, we repeat the comparison against a leaderboard estimated from the synthetic items.
+We estimate model ability with a Rasch model, in which the probability that model $m$ answers item $i$ correctly is the logistic function of $\theta_m - b_i$. Parameters are fit by penalized joint maximum likelihood: alternating Newton updates of abilities and difficulties, each with a ridge penalty ($\lambda = 0.1$, equivalent to a normal prior) that keeps estimates finite for models with near-perfect or near-zero scores, and abilities centered at zero for identification. Joint maximum likelihood is defensible here because each model answers hundreds to thousands of items, the regime in which its finite-sample bias is negligible, and the robustness checks show that the ranking conclusion survives replacing the Rasch model with raw accuracy entirely. The model is fit separately to the original and to the paraphrased responses, and the resulting rankings are compared. A standard leaderboard is the ranking from original items; a paraphrase-controlled leaderboard is the ranking from paraphrased items; uniform contamination shifts both equally and does not change their relative order, so any rank discrepancy is attributable to differential contamination. As an independent check that does not depend on paraphrasing, we repeat the comparison against a leaderboard estimated from the synthetic items.
 
 ## Sensitivity analysis
 
-We characterize the detection floor in three ways: the detection rate of the audit by contamination condition in the controlled group; a minimum detectable effect computed from the standard error of the item-level gaps for a clean model at conventional power; and a simulation in which we inject differential contamination of magnitude delta into half of the models on half of the items, regenerate responses under a fixed seed, and measure the resulting reordering as a function of delta. All analyses use only public data and a laptop; no model inference was run.
+We characterize the detection floor in three ways: the detection rate of the audit by contamination condition in the controlled group; a minimum detectable effect, computed as 2.8 times the standard error of the mean item-level gap for a clean model (the sum of the two-sided 5 percent and the 80 percent power normal quantiles); and a simulation in which we inject differential contamination of magnitude delta into half of the models on half of the items, regenerate responses under a fixed seed, and measure the resulting reordering as a function of delta. All analyses use only public data and a laptop; no model inference was run.
 
 # Results
 
