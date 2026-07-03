@@ -225,7 +225,7 @@ Leaderboards now drive much of the empirical progress in large language models, 
 
 This framing conflates two questions that have different answers and different consequences. The first is whether contamination inflates a model's absolute score. The second is whether contamination changes the ordering of models, that is, the leaderboard ranking. The two come apart whenever contamination is shared across models: if every model has memorized a benchmark to a similar degree, all scores rise together and the ranking is unchanged. Ranking distortion requires contamination to be differential, advantaging some models more than others. The distinction matters because almost all downstream use of a leaderboard is comparative.
 
-A substantial literature detects contamination, and its methods form a clear lineage. String-matching approaches search for n-gram overlap between benchmark items and the training corpus and were used to decontaminate the GPT-3 evaluation suite [@brown2020gpt3]; they require access to the training data and are defeated by paraphrased leaks [@yang2023rephrased]. Membership-inference approaches probe the model's token probabilities for signatures of having seen an item, as in the Min-K% statistic [@shi2023detecting], and canary methods plant unique strings whose later reproduction proves memorization [@carlini2019secret]. Performance-based approaches, closest to this study, compare a model's accuracy on published items against a reference, either rephrased items [@yang2023rephrased] or reference models together with synthetic items [@dekoninck2024constat]. All of these ask whether a given model is contaminated on a given benchmark, and all can be evaded by an adversarial provider [@dekoninck2024evading] or concealed by reinforcement-learning post-training [@wang2025fragility]. Their unit of analysis is the model, not the leaderboard.
+A substantial literature detects contamination, and its methods form a clear lineage. String-matching approaches search for n-gram overlap between benchmark items and the training corpus and were used to decontaminate the GPT-3 evaluation suite [@brown2020gpt3]; they require access to the training data and are defeated by paraphrased leaks [@yang2023rephrased]. Membership-inference approaches probe the model's token probabilities for signatures of having seen an item, as in the Min-K% statistic [@shi2023detecting], and canary methods plant unique strings whose later reproduction proves memorization [@carlini2019secret]. A complementary line prevents rather than detects, refreshing benchmark items faster than any training cutoff [@white2024livebench]. Performance-based approaches, closest to this study, compare a model's accuracy on published items against a reference, either rephrased items [@yang2023rephrased] or reference models together with synthetic items [@dekoninck2024constat]. All of the detection approaches ask whether a given model is contaminated on a given benchmark, and all can be evaded by an adversarial provider [@dekoninck2024evading] or concealed by reinforcement-learning post-training [@wang2025fragility]. Their unit of analysis is the model, not the leaderboard.
 
 Item response theory (IRT) makes the comparative structure of a leaderboard explicit [@lord1980irt]. A growing line of work treats models as examinees and benchmark items as test items: large evaluation suites standardize the administration of many benchmarks to many models [@liang2023holistic], IRT-based item selection compresses benchmarks to a fraction of their length while preserving ability estimates [@polo2024tinybenchmarks], IRT diagnostics grade the quality of benchmark items themselves [@zhou2026lost], and psychometric aggregation has been proposed as a principled replacement for averaging scores across benchmarks [@federiakin2025psychometric]. A recent systematic review of this literature names measurement invariance as an open problem for LLM evaluation [@ye2025psychometrics]. All of these approaches place models and items on a common latent scale and link benchmarks through anchor items that are assumed to function equivalently across models.
 
@@ -286,7 +286,7 @@ cal_tab <- cal_sum %>% filter(condition %in% ord) %>%
             `Corrected effect` = sprintf("%+.3f", contam), SD = fmt3(csd),
             `Detection rate` = pct(power))
 cat(knitr::kable(cal_tab, row.names = FALSE, format = "pipe"), sep = "\n")
-cat("\n: Ground-truth calibration of the audit by contamination condition. The corrected effect is the mean original-minus-paraphrase gap referenced to each model's clean base; detection requires a paired z above 1.96 and a corrected effect above 0.05. {#tbl-calibration}\n")
+cat("\n: The audit recovers injected contamination dose-responsively and does not flag the negative control. {#tbl-calibration apa-note=\"The corrected effect is the mean original-minus-paraphrase accuracy gap minus the same gap for the condition's clean Llama-2 base model; SD is its standard deviation across models. Detection requires a paired z above 1.96 and a corrected effect above 0.05. The training condition (legitimate training split only) is the negative control; rephrase is leakage of the paraphrased test.\"}\n")
 ```
 
 ```{r fig-validation}
@@ -353,7 +353,7 @@ bench_tab <- data.frame(
   `r (synthetic)` = fmt3(perbench_ns),
   check.names = FALSE)
 cat(knitr::kable(bench_tab, row.names = FALSE, format = "pipe"), sep = "\n")
-cat("\n: Per-benchmark robustness: aligned items, minimum detectable effect (MDE), items flagged as contaminated anchors, and rank correlations between the standard leaderboard and each contamination-controlled leaderboard. {#tbl-benchmarks}\n")
+cat("\n: Each benchmark independently shows a near-invariant leaderboard. {#tbl-benchmarks apa-note=\"Items = aligned original-paraphrase pairs. MDE = minimum detectable effect at 80 percent power, from the clean base model's item-level gaps. Flagged items = benchmark-centered original-minus-paraphrase gap exceeding two standard deviations. r (paraphrase) and r (synthetic) = rank correlation between the standard leaderboard and the leaderboard scored on paraphrased or synthetic items.\"}\n")
 ```
 
 ```{r}
@@ -364,7 +364,7 @@ ctab <- corrob %>% filter(both) %>%
             `Synthetic axis` = sprintf("%+.3f", B),
             MDE = fmt3(mde[bench]))
 cat(knitr::kable(ctab, row.names = FALSE, format = "pipe"), sep = "\n")
-cat("\n: Model-by-benchmark cases whose differential contamination exceeds the benchmark minimum detectable effect on both the paraphrase and the synthetic reference. {#tbl-corroborated}\n")
+cat("\n: Differential contamination is rare and concentrated in a few large models. {#tbl-corroborated apa-note=\"Axes are base-referenced contamination signals (original minus paraphrased accuracy; original minus synthetic accuracy), each referenced to the per-benchmark median across the 47 public models. A case is listed when it exceeds the benchmark's minimum detectable effect (MDE) on both axes.\"}\n")
 ```
 
 # Discussion
