@@ -4,13 +4,21 @@ shorttitle: "Contamination Rarely Reorders Leaderboards"
 author:
   - name: Xingyao (Doria) Xiao
     corresponding: true
-    email: doriax@stanford.edu
+    email: xiaoxg@berkeley.edu
+    orcid: 0000-0001-8430-0438
     affiliations:
       - name: Stanford University
+        department: Graduate School of Education
+        address: 485 Lasuen Mall
+        city: Stanford
+        region: CA
+        postal-code: "94305"
+        country: United States
   - name: Yihong Cheng
     email: yhcheng@cityu.edu.mo
     affiliations:
-      - name: School of Education, City University of Macau
+      - name: City University of Macau
+        department: School of Education
         city: Macau
         country: China
 # NOTE: abstract numbers (+0.187, -0.012, 0.997, 3 of 188) are typed by hand because YAML
