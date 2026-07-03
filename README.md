@@ -65,10 +65,10 @@ under the MIT License (`LICENSE`).
 
 ```bibtex
 @unpublished{xiao2026contamination,
-  author = {Xiao, Xingyao},
-  title  = {Contamination Inflates Scores but Rarely Reorders Leaderboards:
-            A Ground-Truth-Calibrated Measurement-Invariance Audit of Language Model Benchmarks},
+  author = {Xiao, Xingyao and Cheng, Yihong},
+  title  = {Contamination Inflates Scores but Rarely Reorders Large Language Model Leaderboards},
   year   = {2026},
-  note   = {Manuscript}
+  note   = {Manuscript},
+  url    = {https://github.com/DoriaXiao/anchor-dif}
 }
 ```

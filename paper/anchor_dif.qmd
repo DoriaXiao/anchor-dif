@@ -7,10 +7,12 @@ author:
     email: doriax@stanford.edu
     affiliations:
       - name: Stanford University
-  # TODO: confirm Yihong's affiliation and email before submission
   - name: Yihong Cheng
+    email: yhcheng@cityu.edu.mo
     affiliations:
-      - name: Stanford University
+      - name: School of Education, City University of Macau
+        city: Macau
+        country: China
 # NOTE: abstract numbers (+0.187, -0.012, 0.997, 3 of 188) are typed by hand because YAML
 # cannot run inline R. They are the ONLY hand-entered numbers in the manuscript; keep them
 # in sync with the computed body values (getc("default"), getc("training"), sp_nr, n_corrob/n_tests).
@@ -304,7 +306,7 @@ Several boundaries qualify the claim. The within-item contrast requires both an 
 
 # Open Practices Statement
 
-This study reused publicly available data and conducted no new model inference or human data collection. The per-instance benchmark response matrices are from the ConStat release [@dekoninck2024constat], and the observational identifiability check draws on HELM [@liang2023holistic] and PSN-IRT [@zhou2026lost]. The derived response matrices and the analysis code, which is the manuscript source itself, are available at [REPOSITORY URL TO BE INSERTED]. The manuscript is a literate document: every reported quantity is computed inline from these matrices, and the leaderboard-distortion simulation runs under a fixed seed (seed 1). Session and package versions are recorded in the Appendix. No aspect of the study was preregistered.
+This study reused publicly available data and conducted no new model inference or human data collection. The per-instance benchmark response matrices are from the ConStat release [@dekoninck2024constat], and the observational identifiability check draws on HELM [@liang2023holistic] and PSN-IRT [@zhou2026lost]. The derived response matrices and the analysis code, which is the manuscript source itself, are available at <https://github.com/DoriaXiao/anchor-dif>. The manuscript is a literate document: every reported quantity is computed inline from these matrices, and the leaderboard-distortion simulation runs under a fixed seed (seed 1). Session and package versions are recorded in the Appendix. No aspect of the study was preregistered.
 
 # Declarations
 
