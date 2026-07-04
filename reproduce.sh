@@ -8,3 +8,7 @@ echo "Rendering the manuscript (recomputes every reported number from data/const
 quarto render paper/anchor_dif.qmd --to apaquarto-pdf
 
 echo "Done. Output: paper/anchor_dif.pdf"
+
+echo "Rendering the coauthor/review docx (with APA running head fix) ..."
+quarto render paper/anchor_dif.qmd --to apaquarto-docx
+python3 paper/fix_docx_header.py paper/anchor_dif.docx
