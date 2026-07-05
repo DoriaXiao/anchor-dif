@@ -387,7 +387,7 @@ Several boundaries qualify the claim. The within-item contrast requires both an 
 
 *Consent for publication.* Not applicable.
 
-*Availability of data and materials.* The datasets analyzed during the current study (the derived model-by-item response matrices) are available in the anchor-dif repository, <https://github.com/DoriaXiao/anchor-dif>.
+*Availability of data and materials.* The datasets analyzed during the current study (the derived model-by-item response matrices) are available in the anchor-dif repository, <https://github.com/DoriaXiao/anchor-dif>, permanently archived at <https://doi.org/10.5281/zenodo.21199450>.
 
 *Code availability.* The analysis code is the manuscript source itself and is available in the same repository, <https://github.com/DoriaXiao/anchor-dif>.
 
@@ -395,7 +395,7 @@ Several boundaries qualify the claim. The within-item contrast requires both an 
 
 # Open Practices Statement
 
-This study reused publicly available data and conducted no new model inference or human data collection. The per-instance benchmark response matrices are from the ConStat release [@dekoninck2024constat], and the observational identifiability check draws on HELM [@liang2023holistic] and PSN-IRT [@zhou2026lost]. The derived response matrices and the analysis code, which is the manuscript source itself, are available at <https://github.com/DoriaXiao/anchor-dif>. The manuscript is a literate document: every reported quantity is computed inline from these matrices, and the leaderboard-distortion simulation runs under a fixed seed (seed 1). Session and package versions are recorded in the Appendix. No aspect of the study was preregistered.
+This study reused publicly available data and conducted no new model inference or human data collection. The per-instance benchmark response matrices are from the ConStat release [@dekoninck2024constat], and the observational identifiability check draws on HELM [@liang2023holistic] and PSN-IRT [@zhou2026lost]. The derived response matrices and the analysis code, which is the manuscript source itself, are available at <https://github.com/DoriaXiao/anchor-dif> and permanently archived at <https://doi.org/10.5281/zenodo.21199450>. The manuscript is a literate document: every reported quantity is computed inline from these matrices, and the leaderboard-distortion simulation runs under a fixed seed (seed 1). Session and package versions are recorded in the Appendix. No aspect of the study was preregistered.
 
 # References
 

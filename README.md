@@ -1,5 +1,7 @@
 # Contamination Inflates Scores but Rarely Reorders Leaderboards
 
+[![DOI](https://zenodo.org/badge/1287754861.svg)](https://doi.org/10.5281/zenodo.21199449)
+
 A ground-truth-calibrated measurement-invariance audit of language model benchmarks.
 
 This repository is the reference implementation and reproducible manuscript for the study.
@@ -69,6 +71,7 @@ under the MIT License (`LICENSE`).
   title  = {Contamination Inflates Scores but Rarely Reorders Large Language Model Leaderboards},
   year   = {2026},
   note   = {Manuscript},
-  url    = {https://github.com/DoriaXiao/anchor-dif}
+  url    = {https://github.com/DoriaXiao/anchor-dif},
+  doi    = {10.5281/zenodo.21199450}
 }
 ```
